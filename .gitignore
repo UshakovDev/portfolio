@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ru/docx
+СТРУКТУРА_ПРОЕКТА.md
+ВИЗУАЛЬНАЯ_СХЕМА.md
+ИНСТРУКЦИЯ_ЗАПУСКА.md
