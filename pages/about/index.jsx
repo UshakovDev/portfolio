@@ -77,49 +77,76 @@ export const aboutData = [
     ],
   },
   {
-    title: "awards",
+    title: "достижения",
     info: [
       {
-        title: "Webby Awards - Honoree",
-        stage: "2011 - 2012",
+        icon: "🧩",
+        title: "Pet-проекты",
+        text: "Реализовал собственные решения и эксперименты с Bitrix, React и другими технологиями."
       },
       {
-        title: "Adobe Design Achievement Awards - Finalist",
-        stage: "2009 - 2010",
+        icon: "📘",
+        title: "Документация",
+        text: "Улучшил внутренние процессы в команде через системное описание проектов и фич."
+      },
+      {
+        icon: "⚙️",
+        title: "Развитие",
+        text: "Самостоятельно освоил новые фреймворки и инструменты, расширив стек технологий."
       },
     ],
   },
   {
-    title: "experience",
+    title: "опыт",
     info: [
       {
-        title: "UX/UI Designer - XYZ Company",
-        stage: "2012 - 2023",
+        title: "Web-разработчик - СП-ГРУП",
+        stage: "2024 - 2025",
       },
       {
-        title: "Web Developer - ABC Agency",
-        stage: "2010 - 2012",
-      },
-      {
-        title: "Intern - DEF Corporation",
-        stage: "2008 - 2010",
+        title: "Full Stack разработчик - самообучение",
+        stage: "2023 - 2024",
       },
     ],
   },
   {
-    title: "credentials",
+    title: "сертификаты",
     info: [
       {
-        title: "Web Development - ABC University, LA, CA",
-        stage: "2011",
+        icon: BitrixIcon,
+        title: "Разработчик - Bitrix Framework",
+        stage: "2024",
+        url: "https://drive.google.com/file/d/1yFebpXZf7lqu_tmLFkC0eu9_1qtw7dUh/view?usp=sharing",
       },
       {
-        title: "Computer Science Diploma - AV Technical Institute",
-        stage: "2009",
+        title: "Администратор. Бизнес - Bitrix",
+        stage: "2024",
+        icon: BitrixIcon,
+        url: "https://drive.google.com/file/d/16RJ19GbGnAnfgGPenfNA5Tlj_i2uvkT5/view?usp=sharing",
       },
       {
-        title: "Certified Graphic Designer - ABC Institute, Los Angeles, CA",
-        stage: "2006",
+        title: "Администратор. Модули - Bitrix",
+        stage: "2024",
+        icon: BitrixIcon,
+        url: "https://drive.google.com/file/d/16RJ19GbGnAnfgGPenfNA5Tlj_i2uvkT5/view?usp=sharing",
+      },
+      {
+        title: "Администратор. Базовый - Bitrix",
+        stage: "2024",
+        icon: BitrixIcon,
+        url: "https://drive.google.com/file/d/1xJ4kwjVT-K_zDZdx3b8BEiAUEtW--O14/view?usp=sharing",
+      },
+      {
+        title: "Контент-менеджер - Bitrix",
+        stage: "2024",
+        icon: BitrixIcon,
+        url: "https://drive.google.com/file/d/13WJols4k-6GgK2HOxypfuXdposI0RmhF/view?usp=sharing",
+      },
+      {
+        title: "Introduction to Python - Stepik",
+        stage: "2023",
+        icon: SiPython,
+        url: "https://www.sololearn.com/certificates/CC-UKE2DBF4",
       },
     ],
   },
@@ -251,19 +278,85 @@ const About = () => {
                 key={itemI}
                 className="flex-1 flex flex-col md:flex-row max-w-max gap-x-2 items-center text-center text-white/60"
               >
-                {/* title */}
-                <div className="font-light mb-2 md:mb-0">{item.title}</div>
-                <div className="hidden md:flex">-</div>
-                <div>{item.stage}</div>
-
-                <div className="flex gap-x-4">
-                  {/* icons */}
-                  {item.icons?.map((Icon, iconI) => (
-                    <div key={iconI} className="text-2xl leading-none text-white">
-                      <Icon />
+                {item.text ? (
+                  <div className="flex items-start gap-x-3 text-left">
+                    <div className="text-2xl leading-none">{item.icon}</div>
+                    <div>
+                      <div className="font-semibold text-white mb-1">{item.title}</div>
+                      <div className="text-sm text-white/60 max-w-[520px]">{item.text}</div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <>
+                    {/* icon (single) + title + optional stage in one row; make row clickable if url provided */}
+                    {item.url && item.icon ? (
+                      <a href={item.url} target="_blank" rel="noreferrer noopener" className="block">
+                        <div className={`flex items-center gap-x-2 ${item.icon === SiPython ? "xl:ml-[7px]" : ""} ${!item.icon && !item.icons?.length && item.stage ? "flex-wrap md:flex-nowrap" : ""}`}>
+                          {item.icon
+                            ? (() => {
+                                const SingleIcon = item.icon;
+                                const isBitrix = SingleIcon === BitrixIcon;
+                                const isPython = SingleIcon === SiPython;
+                                const adjustClass = isBitrix ? "xl:relative xl:top-[7px]" : "";
+                                const sizeClass = isBitrix ? "w-10 h-10" : isPython ? "w-7 h-7" : "w-9 h-9";
+                                return (
+                                  <div className={`${sizeClass} hidden xl:flex items-center justify-center text-white flex-shrink-0 ${adjustClass}`}>
+                                    <SingleIcon className="w-full h-full object-contain" size={24} />
+                                  </div>
+                                );
+                              })()
+                            : null}
+                          <div className={`font-light mb-0 ${item.icon === SiPython ? "xl:ml-[4px]" : ""} ${!item.icon && !item.icons?.length && item.stage ? "w-full md:w-auto" : ""}`}>{item.title}</div>
+                          {item.stage ? (
+                            <>
+                              <div className={`hidden md:flex ${item.icon === SiPython ? "xl:ml-[4px]" : ""}`}>-</div>
+                              <div className={`${item.icon === SiPython ? "xl:ml-[4px]" : ""} ${!item.icon && !item.icons?.length ? "w-full text-center md:w-auto md:text-left" : ""}`}>{item.stage}</div>
+                            </>
+                          ) : null}
+                        </div>
+                      </a>
+                    ) : (
+                      <div className={`flex items-center gap-x-2 ${item.icon === SiPython ? "xl:ml-[7px]" : ""} ${!item.icon && !item.icons?.length && item.stage ? "flex-wrap md:flex-nowrap" : ""}`}>
+                        {item.icon
+                          ? (() => {
+                              const SingleIcon = item.icon;
+                              const isBitrix = SingleIcon === BitrixIcon;
+                              const isPython = SingleIcon === SiPython;
+                              const adjustClass = isBitrix ? "xl:relative xl:top-[7px]" : "";
+                              const sizeClass = isBitrix ? "w-10 h-10" : isPython ? "w-7 h-7" : "w-9 h-9";
+                              return (
+                                <div className={`${sizeClass} hidden xl:flex items-center justify-center text-white flex-shrink-0 ${adjustClass}`}>
+                                  <SingleIcon className="w-full h-full object-contain" size={24} />
+                                </div>
+                              );
+                            })()
+                          : null}
+                        <div className={`font-light mb-0 ${item.icon === SiPython ? "xl:ml-[4px]" : ""} ${!item.icon && !item.icons?.length && item.stage ? "w-full md:w-auto" : ""}`}>{item.title}</div>
+                        {item.stage ? (
+                          <>
+                            <div className={`hidden md:flex ${item.icon === SiPython ? "xl:ml-[4px]" : ""}`}>-</div>
+                            <div className={`${item.icon === SiPython ? "xl:ml-[4px]" : ""} ${!item.icon && !item.icons?.length ? "w-full text-center md:w-auto md:text-left" : ""}`}>{item.stage}</div>
+                          </>
+                        ) : null}
+                      </div>
+                    )}
+
+                    {/* icons array inline for skills (no single icon) */}
+                    {!item.icon && item.icons?.length ? (
+                      <div className="flex items-center gap-x-4 ml-3">
+                        {item.icons.map((Icon, iconI) => (
+                          <div key={iconI} className="text-2xl leading-none text-white flex items-center justify-center">
+                            {Icon === BitrixIcon ? (
+                              <BitrixIcon className="w-[1.5em] h-[1.5em] object-contain align-middle relative top-[1px]" />
+                            ) : (
+                              <Icon />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </>
+                )}
               </div>
             ))}
           </div>
