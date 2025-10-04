@@ -17,11 +17,11 @@ export const navData = [
   { name: "about", path: "/about", Icon: HiUser },
   // { name: "services", path: "/services", Icon: HiRectangleGroup }, Мои услуги
   { name: "work", path: "/work", Icon: HiViewColumns },
-  {
-    name: "testimonials",
-    path: "/testimonials",
-    Icon: HiChatBubbleBottomCenterText,
-  },
+  // {
+  //   name: "testimonials",
+  //   path: "/testimonials",
+  //   Icon: HiChatBubbleBottomCenterText,
+  // }, Отзывы
   {
     name: "contact",
     path: "/contact",
