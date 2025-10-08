@@ -24,12 +24,12 @@ const workSlides = {
         },
         {
           title: "title",
-          path: "/thumb3.jpg",
-          link: "http://example.com",
+          path: "/thumb3.png",
+          link: "https://faw28.ru",
         },
         {
           title: "title",
-          path: "/thumb4.jpg",
+          path: "/thumb4.png",
           link: "http://example.com",
         },
       ],
