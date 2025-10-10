@@ -82,6 +82,30 @@ const workSlides = {
         },
       ],
     },
+    {
+      images: [
+        {
+          title: "title",
+          path: "/thumb13.png",
+          link: "https://github.com/UshakovDev/ushakov.cookie",
+        },
+        {
+          title: "title",
+          path: "/thumb14.png",
+          link: "https://github.com/UshakovDev/ushakov.telegram",
+        },
+        {
+          title: "title",
+          path: "/thumb15.png",
+          link: "https://github.com/UshakovDev/Anonymous-Telegram-chatbot",
+        },
+        {
+          title: "title",
+          path: "/thumb16.png",
+          link: "https://github.com/UshakovDev/youtube-proxy",
+        },
+      ],
+    },
   ],
 };
 
