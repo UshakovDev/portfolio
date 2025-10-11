@@ -30,7 +30,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="h-full bg-primary/30">
+    <div className="h-full bg-primary/30 overflow-y-auto pb-[30px] md:pb-0">
       <div className="container mx-auto py-32 text-center xl:text-left flex items-center justify-center h-full -mt-5 md:mt-0">
         {/* text & form */}
         <div className="flex flex-col w-full max-w-[700px]">
@@ -99,6 +99,12 @@ const Contact = () => {
               required
               aria-required
             />
+            <div className="flex items-center gap-2 text-sm text-white/60">
+              <input type="checkbox" id="privacy" required />
+              <label htmlFor="privacy">
+                Согласен с <a href="/privacy" className="text-accent hover:underline">политикой конфиденциальности</a>
+              </label>
+            </div>
             <button
               type="submit"
               className="btn rounded-full border border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group"
