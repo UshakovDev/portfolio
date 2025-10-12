@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
 import { fadeIn } from "../../variants";
@@ -99,12 +100,14 @@ const Contact = () => {
               required
               aria-required
             />
+            {/* privacy */}
             <div className="flex items-center gap-2 text-sm text-white/60">
               <input type="checkbox" id="privacy" required />
               <label htmlFor="privacy">
-                Согласен с <a href="/privacy" className="text-accent hover:underline">политикой конфиденциальности</a>
+                Согласен с <Link href="/privacy" className="text-accent hover:underline">политикой конфиденциальности</Link>
               </label>
             </div>
+
             <button
               type="submit"
               className="btn rounded-full border border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group"
