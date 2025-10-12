@@ -351,9 +351,9 @@ const About = () => {
                             ) : (
                               <Icon />
                             )}
-                          </div>
-                        ))}
-                      </div>
+                    </div>
+                  ))}
+                </div>
                     ) : null}
                   </>
                 )}

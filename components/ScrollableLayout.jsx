@@ -27,16 +27,16 @@ const ScrollableLayout = ({ children }) => {
     >
       {/* metadata */}
       <Head>
-        <title>Ethan Smith | Portfolio</title>
+        <title>Ushakov | Portfolio</title>
         <meta
           name="description"
-          content="Ethan Smith is a Full-stack web developer with 10+ years of experience."
+          content="Дмитрий Ушаков - веб-разработчик с опытом работы с Bitrix, React, Python, PHP. Специализируюсь на создании решений, которые работают."
         />
         <meta
           name="keywords"
-          content="react, next, nextjs, html, css, javascript, js, modern-ui, modern-ux, portfolio, framer-motion, 3d-website, particle-effect"
+          content="веб-разработчик, bitrix, react, python, php, mysql, postgresql, docker, nginx, fullstack, портфолио, разработка сайтов"
         />
-        <meta name="author" content="Sanidhya Kumar Verma" />
+        <meta name="author" content="Дмитрий Ушаков" />
         <meta name="theme-color" content="#f13024" />
       </Head>
 
