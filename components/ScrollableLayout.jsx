@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import { useEffect } from "react";
 
-import Header from "../components/Header";
-import Nav from "../components/Nav";
-import TopLeftImg from "../components/TopLeftImg";
+import Header from "./Header";
+import Nav from "./Nav";
+import TopLeftImg from "./TopLeftImg";
 
 // setup font
 const inter = Inter({
@@ -12,10 +13,17 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const Layout = ({ children }) => {
+const ScrollableLayout = ({ children }) => {
+  useEffect(() => {
+    document.body.classList.add('scrollable');
+    return () => {
+      document.body.classList.remove('scrollable');
+    };
+  }, []);
+
   return (
     <main
-      className={`page bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
+      className={`h-screen overflow-y-auto bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
     >
       {/* metadata */}
       <Head>
@@ -42,4 +50,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default ScrollableLayout;

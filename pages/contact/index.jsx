@@ -3,30 +3,35 @@ import { BsArrowRight } from "react-icons/bs";
 
 import { fadeIn } from "../../variants";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
-    const myForm = event.target;
-    const formData = new FormData(myForm);
-
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData).toString(),
-    })
-      .then(() => alert("Thank you. I will get back to you ASAP."))
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+    try {
+      await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        event.target,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+      alert("Сообщение отправлено. Я отвечу вам как можно скорее.");
+      event.target.reset();
+    } catch (error) {
+      console.error(error);
+      alert("Ошибка отправки. Попробуйте позже.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="h-full bg-primary/30">
-      <div className="container mx-auto py-32 text-center xl:text-left flex items-center justify-center h-full">
+    <div className="h-full bg-primary/30 overflow-y-auto pb-[30px] md:pb-0">
+      <div className="container mx-auto py-32 text-center xl:text-left flex items-center justify-center h-full -mt-5 md:mt-0">
         {/* text & form */}
         <div className="flex flex-col w-full max-w-[700px]">
           {/* text */}
@@ -37,7 +42,7 @@ const Contact = () => {
             exit="hidden"
             className="h2 text-center mb-12"
           >
-            Let's <span className="text-accent">connect.</span>
+            Обратная <span className="text-accent">связь.</span>
           </motion.h2>
 
           {/* form */}
@@ -50,15 +55,14 @@ const Contact = () => {
             onSubmit={handleSubmit}
             autoComplete="off"
             autoCapitalize="off"
-            // only needed for production (in netlify) to accept form input
-            data-netlify="true"
+            // EmailJS: поля name/email/subject/message должны совпадать с шаблоном
           >
             {/* input group */}
             <div className="flex gap-x-6 w-full">
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Имя"
                 className="input"
                 disabled={isLoading}
                 aria-disabled={isLoading}
@@ -68,7 +72,7 @@ const Contact = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="E-mail"
+                placeholder="Эл. почта"
                 className="input"
                 disabled={isLoading}
                 aria-disabled={isLoading}
@@ -79,7 +83,7 @@ const Contact = () => {
             <input
               type="text"
               name="subject"
-              placeholder="Subject"
+              placeholder="Тема"
               className="input"
               disabled={isLoading}
               aria-disabled={isLoading}
@@ -88,13 +92,19 @@ const Contact = () => {
             />
             <textarea
               name="message"
-              placeholder="Message..."
+              placeholder="Сообщение..."
               className="textarea"
               disabled={isLoading}
               aria-disabled={isLoading}
               required
               aria-required
             />
+            <div className="flex items-center gap-2 text-sm text-white/60">
+              <input type="checkbox" id="privacy" required />
+              <label htmlFor="privacy">
+                Согласен с <a href="/privacy" className="text-accent hover:underline">политикой конфиденциальности</a>
+              </label>
+            </div>
             <button
               type="submit"
               className="btn rounded-full border border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group"
@@ -102,7 +112,7 @@ const Contact = () => {
               aria-disabled={isLoading}
             >
               <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500">
-                Let's talk
+                Отправить
               </span>
 
               <BsArrowRight

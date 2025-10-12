@@ -13,48 +13,112 @@ const workSlides = {
     {
       images: [
         {
-          title: "title",
-          path: "/thumb1.jpg",
-          link: "http://example.com",
+          title: "ushakov.cookie",
+          path: "/ushakov.cookie.png",
+          link: "https://github.com/UshakovDev/ushakov.cookie",
+          description: "Личный проект",
         },
         {
-          title: "title",
-          path: "/thumb2.jpg",
-          link: "http://example.com",
+          title: "ushakov.telegram",
+          path: "/ushakov.telegram.png",
+          link: "https://github.com/UshakovDev/ushakov.telegram",
+          description: "Личный проект",
         },
         {
-          title: "title",
-          path: "/thumb3.jpg",
-          link: "http://example.com",
+          title: "Anonymous-Telegram-chatbot",
+          path: "/Anonymous-Telegram-chatbot.png",
+          link: "https://github.com/UshakovDev/Anonymous-Telegram-chatbot",
+          description: "Личный проект",
         },
         {
-          title: "title",
-          path: "/thumb4.jpg",
-          link: "http://example.com",
+          title: "youtube-proxy",
+          path: "/youtube-proxy.png",
+          link: "https://github.com/UshakovDev/youtube-proxy",
+          description: "Личный проект",
         },
       ],
     },
     {
       images: [
         {
-          title: "title",
-          path: "/thumb4.jpg",
-          link: "http://example.com",
+          title: "arsenal-rent.ru",
+          path: "/arsenal-rent.ru.png",
+          link: "https://arsenal-rent.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
-          title: "title",
-          path: "/thumb1.jpg",
-          link: "http://example.com",
+          title: "asyastroy.ru",
+          path: "/asyastroy.ru.png",
+          link: "https://asyastroy.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
-          title: "title",
-          path: "/thumb2.jpg",
-          link: "http://example.com",
+          title: "faw28.ru",
+          path: "/faw28.ru.png",
+          link: "https://faw28.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
-          title: "title",
-          path: "/thumb3.jpg",
-          link: "http://example.com",
+          title: "snab28.ru",
+          path: "/snab28.ru.png",
+          link: "https://snab28.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+      ],
+    },
+    {
+      images: [
+        {
+          title: "xn--28-jlcdu4bn.xn--p1ai",
+          path: "/xn--28-jlcdu4bn.xn--p1ai.png",
+          link: "https://xn--28-jlcdu4bn.xn--p1ai",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "endoscopia28.ru",
+          path: "/endoscopia28.ru.png",
+          link: "https://endoscopia28.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "tvoyaapteka.ru",
+          path: "/tvoyaapteka.ru.png",
+          link: "https://www.tvoyaapteka.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "mmill.ru",
+          path: "/mmill.ru.png",
+          link: "https://mmill.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+      ],
+    },
+    {
+      images: [
+        {
+          title: "shtormauto.ru",
+          path: "/shtormauto.ru.png",
+          link: "https://shtormauto.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "domobuvi.shop",
+          path: "/domobuvi.shop.png",
+          link: "https://domobuvi.shop",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "berloga28.ru",
+          path: "/berloga28.ru.png",
+          link: "https://berloga28.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
+        },
+        {
+          title: "realvita.ru",
+          path: "/realvita.ru.png",
+          link: "https://realvita.ru",
+          description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
       ],
     },
@@ -94,19 +158,17 @@ const WorkSlider = () => {
                     aria-hidden
                   />
 
-                  {/* title */}
-                  <div className="absolute bottom-0 translate-y-full group-hover:-translate-y-10 group-hover:xl:-translate-y-20 transition-all duration-300">
+                  {/* overlay content: description + icon */}
+                  <div className="absolute inset-0 left-0 w-full flex items-center justify-center translate-y-[60%] group-hover:translate-y-0 transition-all duration-300">
                     <Link
                       href={image.link}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="flex items-center gap-x-2 text-[13px] tracking-[0.2em]"
+                      className="flex items-center justify-center gap-x-2 text-[13px] tracking-[0.2em] text-center px-3"
                     >
-                      {/* title part 1 */}
-                      <div className="delay-100">LIVE</div>
-                      {/* title part 2 */}
-                      <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
-                        PROJECT
+                      {/* description */}
+                      <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-100 whitespace-pre-line">
+                        {(image.description || "").replace(" (", "\n(")}
                       </div>
                       {/* icon */}
                       <div className="text-xl translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
