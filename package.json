@@ -40,7 +40,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "build:gh": "next build && next export && rm -rf docs && cp -r out docs"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
