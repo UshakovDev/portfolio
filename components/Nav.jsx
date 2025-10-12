@@ -31,15 +31,26 @@ export const navData = [
 
 const Nav = () => {
   const pathname = usePathname();
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+  // Нормализуем текущий путь: убираем basePath и завершающий слэш
+  let current = pathname || "/";
+  if (base && current.startsWith(base)) current = current.slice(base.length) || "/";
+  if (current.length > 1 && current.endsWith("/")) current = current.slice(0, -1);
+
+  const isActive = (path) => {
+    if (!path) return false;
+    let p = path;
+    if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+    return current === p;
+  };
 
   return (
     <nav className="flex flex-col items-center xl:justify-center gap-y-4 fixed h-max bottom-0 mt-auto xl:right-[2%] z-50 top-0 w-full xl:w-16 xl:max-w-md xl:h-screen">
       <div className="flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full">
         {navData.map((link, i) => (
           <Link
-            className={`${
-              link.path === pathname && "text-accent"
-            } relative flex items-center group hover:text-accent transition-all duration-300`}
+            className={`${isActive(link.path) ? "text-accent" : ""} relative flex items-center group hover:text-accent transition-all duration-300`}
             href={link.path}
             key={i}
           >
