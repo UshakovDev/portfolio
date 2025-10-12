@@ -42,7 +42,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "build:gh": "next build && next export && rm -rf docs && cp -r out docs"
+    "build:gh": "next build && next export && rm -rf docs && cp -r out docs && touch docs/.nojekyll"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
