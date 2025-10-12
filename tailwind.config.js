@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+const isProd = process.env.NODE_ENV === "production";
+const base = isProd ? "/portfolio" : "";
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,18 +24,16 @@ module.exports = {
       xl: "1200px",
     },
     extend: {
-      // Префикс для GitHub Pages
-      basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
       colors: {
         primary: "#131424",
         secondary: "#393A47",
         accent: "#F13024",
       },
       backgroundImage: {
-        explosion: `url("${process.env.NEXT_PUBLIC_BASE_PATH || ''}/bg-explosion.png")`,
-        circles: `url("${process.env.NEXT_PUBLIC_BASE_PATH || ''}/bg-circles.png")`,
-        circleStar: `url("${process.env.NEXT_PUBLIC_BASE_PATH || ''}/circle-star.svg")`,
-        site: `url("${process.env.NEXT_PUBLIC_BASE_PATH || ''}/site-bg.svg")`,
+        explosion: `url("${base}/bg-explosion.png")`,
+        circles: `url("${base}/bg-circles.png")`,
+        circleStar: `url("${base}/circle-star.svg")`,
+        site: `url("${base}/site-bg.svg")`,
       },
       animation: {
         "spin-slow": "spin 6s linear infinite",
