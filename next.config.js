@@ -13,6 +13,9 @@ const nextConfig = {
   assetPrefix: isProd ? "/portfolio" : "",
   // Надёжнее для GitHub Pages
   trailingSlash: true,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isProd ? "/portfolio" : "",
+  },
 };
 
 module.exports = nextConfig;

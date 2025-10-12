@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import Socials from "../components/Socials";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 const Header = () => {
   return (
     <header className="absolute z-30 w-full items-center px-16 xl-px-0 xl:h-[90px]">
@@ -11,7 +13,7 @@ const Header = () => {
           {/* logo */}
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src={`${base}/logo.svg`}
               alt="logo"
               width={220}
               height={48}
