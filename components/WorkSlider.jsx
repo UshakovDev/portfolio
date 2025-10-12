@@ -146,7 +146,7 @@ const WorkSlider = () => {
                 <div className="flex items-center justify-center relative overflow-hidden group">
                   {/* image */}
                   <Image
-                    src={image.path}
+                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${image.path}`}
                     alt={image.title}
                     width={500}
                     height={300}
