@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 
 const TopLeftImg = () => {
   const router = useRouter();
-  const isAbout = router?.pathname?.startsWith("/about");
-  const posClass = isAbout ? "fixed" : "absolute";
+  const needsFixed = router?.pathname?.startsWith("/about") || router?.pathname?.startsWith("/privacy");
+  const posClass = needsFixed ? "fixed" : "absolute";
   return (
     <div className={`${posClass} left-0 top-0 mix-blend-color-dodge z-10 w-[200px] xl:w-[400px] opacity-50 pointer-events-none select-none`}>
       <Image
