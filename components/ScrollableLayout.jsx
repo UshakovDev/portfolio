@@ -43,7 +43,7 @@ const ScrollableLayout = ({ children }) => {
 
       <TopLeftImg />
       <Nav />
-      <Header />
+      <Header sticky />
 
       {/* main content */}
       {children}

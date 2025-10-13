@@ -11,7 +11,8 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const isAbout = router.pathname.startsWith("/about");
-  const AppLayout = isAbout ? ScrollableLayout : Layout;
+  const wantsScrollable = isAbout || Component.useScrollableLayout === true;
+  const AppLayout = wantsScrollable ? ScrollableLayout : Layout;
 
   return (
     <AppLayout>

@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
 import { fadeIn } from "../../variants";
-import ScrollableLayout from "../../components/ScrollableLayout";
 
 const Privacy = () => {
   return (
-    <ScrollableLayout>
-      <div className="bg-primary/30 py-32">
+    <div className="bg-primary/30 py-32">
         <div className="container mx-auto">
           <motion.div
             variants={fadeIn("up", 0.2)}
@@ -110,8 +108,9 @@ const Privacy = () => {
         </motion.div>
         </div>
       </div>
-    </ScrollableLayout>
   );
 };
 
 export default Privacy;
+// флаг для _app.jsx: использовать ScrollableLayout
+Privacy.useScrollableLayout = true;
