@@ -38,6 +38,7 @@ const ScrollableLayout = ({ children }) => {
         />
         <meta name="author" content="Дмитрий Ушаков" />
         <meta name="theme-color" content="#f13024" />
+        <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
       </Head>
 
       <TopLeftImg />

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import Layout from "../components/Layout";
 import ScrollableLayout from "../components/ScrollableLayout";
@@ -14,6 +15,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AppLayout>
+      <Head>
+        <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
+      </Head>
       <AnimatePresence mode="wait">
         <motion.div key={router.route} className="h-full">
           <Transition />
