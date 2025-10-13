@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 const TopLeftImg = () => {
   const router = useRouter();
   const isAbout = router?.pathname?.startsWith("/about");
-  const blendClass = isAbout ? "mix-blend-screen" : "mix-blend-color-dodge";
+  const posClass = isAbout ? "fixed" : "absolute";
   return (
-    <div className={`absolute left-0 top-0 ${blendClass} z-10 w-[200px] xl:w-[400px] opacity-50 pointer-events-none select-none`}>
+    <div className={`${posClass} left-0 top-0 mix-blend-color-dodge z-10 w-[200px] xl:w-[400px] opacity-50 pointer-events-none select-none`}>
       <Image
         src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/top-left-img.png`}
         alt="left cover bg"
