@@ -23,7 +23,7 @@ const ScrollableLayout = ({ children }) => {
 
   return (
     <main
-      className={`h-screen overflow-y-auto bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
+      className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
     >
       {/* metadata */}
       <Head>
@@ -46,6 +46,8 @@ const ScrollableLayout = ({ children }) => {
 
       {/* main content */}
       {children}
+      {/* dynamic spacer equal to bottom nav height on mobile */}
+      <div aria-hidden className="xl:hidden" style={{ height: "var(--bottom-bar-height, 112px)" }} />
     </main>
   );
 };

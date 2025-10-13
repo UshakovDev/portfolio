@@ -2,22 +2,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 
 import Layout from "../components/Layout";
+import ScrollableLayout from "../components/ScrollableLayout";
 import Transition from "../components/Transition";
 
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const isAbout = router.pathname.startsWith("/about");
+  const AppLayout = isAbout ? ScrollableLayout : Layout;
 
   return (
-    <Layout>
+    <AppLayout>
       <AnimatePresence mode="wait">
         <motion.div key={router.route} className="h-full">
           <Transition />
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
-    </Layout>
+    </AppLayout>
   );
 }
 

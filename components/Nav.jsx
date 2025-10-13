@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 // icons
 import {
@@ -32,6 +33,7 @@ export const navData = [
 const Nav = () => {
   const pathname = usePathname();
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const barRef = useRef(null);
 
   // Нормализуем текущий путь: убираем basePath и завершающий слэш
   let current = pathname || "/";
@@ -45,9 +47,22 @@ const Nav = () => {
     return current === p;
   };
 
+  // Measure bottom bar height (mobile) and expose as CSS var
+  useEffect(() => {
+    const updateHeight = () => {
+      const height = barRef.current?.getBoundingClientRect?.().height || 0;
+      if (typeof window !== "undefined" && document?.documentElement?.style) {
+        document.documentElement.style.setProperty("--bottom-bar-height", `${height}px`);
+      }
+    };
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
+
   return (
     <nav className="flex flex-col items-center xl:justify-center gap-y-4 fixed h-max bottom-0 mt-auto xl:right-[2%] z-50 top-0 w-full xl:w-16 xl:max-w-md xl:h-screen">
-      <div className="flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full">
+      <div ref={barRef} className="flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-10 px-4 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-white/10 backdrop-blur-sm text-3xl xl:text-xl xl:rounded-full">
         {navData.map((link, i) => (
           <Link
             className={`${isActive(link.path) ? "text-accent" : ""} relative flex items-center group hover:text-accent transition-all duration-300`}
