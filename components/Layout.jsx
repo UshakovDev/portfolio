@@ -15,7 +15,7 @@ const inter = Inter({
 const Layout = ({ children }) => {
   return (
     <main
-      className={`page bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
+      className={`page bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative isolate`}
     >
       {/* metadata */}
       <Head>
