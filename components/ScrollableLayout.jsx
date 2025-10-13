@@ -23,7 +23,7 @@ const ScrollableLayout = ({ children }) => {
 
   return (
     <main
-      className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative isolate`}
+      className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
     >
       {/* metadata */}
       <Head>
