@@ -2,6 +2,205 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiPlay, HiPause, HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 
+// Аудио-реактивная визуализация на canvas (Web Audio API + AnalyserNode)
+function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
+  const canvasRef = useRef(null);
+  const rafRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const analyserRef = useRef(null);
+  const silentGainRef = useRef(null);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const audioEl = audioRef?.current;
+    if (!audioEl) return;
+
+    let cleanupInner;
+    const setup = async () => {
+      if (!audioCtxRef.current) {
+        const ExistingCtx = (typeof window !== 'undefined') && window.__GLOBAL_AUDIO_CTX;
+        if (ExistingCtx) {
+          audioCtxRef.current = ExistingCtx;
+        } else {
+          audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+          if (typeof window !== 'undefined') {
+            window.__GLOBAL_AUDIO_CTX = audioCtxRef.current;
+          }
+        }
+      }
+      const audioCtx = audioCtxRef.current;
+
+      // Создаем MediaElementSource один раз на элемент
+      if (!audioEl._mediaNode) {
+        try {
+          audioEl._mediaNode = audioCtx.createMediaElementSource(audioEl);
+        } catch (_) {
+          // В некоторых браузерах повторное создание вызовет ошибку
+        }
+      }
+      // Всегда обеспечиваем маршрут звука к выходу независимо от наличия визуализации
+      if (audioEl._mediaNode && !audioEl._connectedToDestination) {
+        try {
+          audioEl._mediaNode.connect(audioCtx.destination);
+          audioEl._connectedToDestination = true;
+        } catch (_) {}
+      }
+
+      // Создаем/получаем глобальный анализатор и тихий gain
+      if (!analyserRef.current) {
+        const globalAnalyser = (typeof window !== 'undefined') && window.__GLOBAL_ANALYSER;
+        if (globalAnalyser) {
+          analyserRef.current = globalAnalyser;
+        } else {
+          const analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 128; // 64 частотных бина
+          analyser.smoothingTimeConstant = 0.85;
+          analyserRef.current = analyser;
+          if (typeof window !== 'undefined') {
+            window.__GLOBAL_ANALYSER = analyser;
+          }
+        }
+
+        if (!silentGainRef.current) {
+          const globalSilent = (typeof window !== 'undefined') && window.__GLOBAL_SILENT_GAIN;
+          if (globalSilent) {
+            silentGainRef.current = globalSilent;
+          } else {
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0; // полная тишина, но узел в графе
+            silentGainRef.current = gain;
+            if (typeof window !== 'undefined') {
+              window.__GLOBAL_SILENT_GAIN = gain;
+            }
+          }
+        }
+        try {
+          if (!analyserRef.current._connectedToSilent && silentGainRef.current) {
+            analyserRef.current.connect(silentGainRef.current);
+            silentGainRef.current.connect(audioCtx.destination);
+            analyserRef.current._connectedToSilent = true;
+          }
+        } catch (_) {}
+      }
+
+      // Подключаем источник к анализатору (однократно)
+      try {
+        if (audioEl._mediaNode && !audioEl._connectedToAnalyser && analyserRef.current) {
+          audioEl._mediaNode.connect(analyserRef.current);
+          audioEl._connectedToAnalyser = true;
+        }
+      } catch (_) {}
+
+      const resumeOnPlay = () => {
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+      };
+      // Если уже играет — пробуем резюмировать сразу, иначе подпишемся на ближайший play
+      if (!audioEl.paused) {
+        resumeOnPlay();
+      } else {
+        audioEl.addEventListener('play', resumeOnPlay, { once: true });
+      }
+
+      const canvas = canvasRef.current;
+      const wrapper = wrapperRef.current;
+      if (!canvas || !wrapper) return;
+      const ctx = canvas.getContext('2d');
+      const analyser = analyserRef.current;
+      const data = new Uint8Array(analyser.frequencyBinCount);
+
+      const resizeCanvas = () => {
+        const rect = wrapper.getBoundingClientRect();
+        const cssW = Math.max(1, rect.width);
+        const cssH = Math.max(1, rect.height);
+        const pixelRatio = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+        canvas.width = cssW * pixelRatio;
+        canvas.height = cssH * pixelRatio;
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      };
+
+      // Первичная инициализация размеров: если контейнер ещё 0px (анимация), попробуем на ближайших кадрах
+      let sizeTries = 0;
+      const ensureSize = () => {
+        sizeTries += 1;
+        resizeCanvas();
+        const hasSize = canvas.width > 0 && canvas.height > 0;
+        if (!hasSize && sizeTries < 10) {
+          requestAnimationFrame(ensureSize);
+        }
+      };
+      ensureSize();
+
+      // Наблюдаем за изменением размеров контейнера
+      let ro;
+      if (typeof ResizeObserver !== 'undefined') {
+        ro = new ResizeObserver(() => resizeCanvas());
+        ro.observe(wrapper);
+      }
+      const onWindowResize = () => resizeCanvas();
+      window.addEventListener('resize', onWindowResize);
+
+      const render = () => {
+        rafRef.current = requestAnimationFrame(render);
+        analyser.getByteFrequencyData(data);
+
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const barCount = Math.min(bars, data.length);
+        const barGap = gap;
+        const barWidth = (w - barGap * (barCount - 1)) / barCount;
+
+        for (let i = 0; i < barCount; i++) {
+          const v = data[i];
+          const bassBoost = i < barCount * 0.2 ? 1.2 : 1.0;
+          const magnitude = Math.min(1, (v / 255) * bassBoost);
+          const barHeight = magnitude * h;
+
+          const grd = ctx.createLinearGradient(0, h - barHeight, 0, h);
+          grd.addColorStop(0, 'rgba(241,48,36,0.95)');
+          grd.addColorStop(1, 'rgba(241,48,36,0.4)');
+
+          const x = i * (barWidth + barGap);
+          const y = h - barHeight;
+
+          ctx.fillStyle = grd;
+          ctx.fillRect(x, y, barWidth, barHeight);
+          ctx.fillStyle = 'rgba(255,255,255,0.2)';
+          ctx.fillRect(x, y, barWidth, 2);
+        }
+      };
+
+      render();
+
+      cleanupInner = () => {
+        cancelAnimationFrame(rafRef.current);
+        window.removeEventListener('resize', onWindowResize);
+        try { ro && ro.disconnect(); } catch (_) {}
+        // Не отключаем аудио-граф, чтобы не ломать цепочку между открытиями
+      };
+
+      return cleanupInner;
+    };
+
+    let disposed = false;
+    setup();
+
+    return () => {
+      disposed = true;
+      if (cleanupInner) cleanupInner();
+    };
+  }, [audioRef, bars, height]);
+
+  return (
+    <div ref={wrapperRef} className="w-full overflow-hidden rounded-md bg-black/20 border border-white/10" style={{ height }}>
+      <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
+    </div>
+  );
+}
+
 const MediaPlayer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -272,10 +471,9 @@ const MediaPlayer = () => {
                 </div>
 
                 {/* Обложка/визуализация */}
-                <div className="flex-1 bg-gradient-to-br from-accent/20 to-primary rounded-lg mb-4 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-accent/30 rounded-full flex items-center justify-center">
-                    <div className="w-8 h-8 bg-accent rounded-full"></div>
-                  </div>
+                <div className="flex-1 bg-gradient-to-br from-accent/20 to-primary rounded-lg mb-4 flex items-center justify-center p-3">
+                  {/* На мобильных делаем больше полос с меньшим зазором */}
+                  <AudioEqualizer audioRef={audioRef} height={72} bars={50} gap={3} />
                 </div>
 
                 {/* Название трека и номер в плейлисте */}
