@@ -13,9 +13,21 @@ const MediaPlayer = () => {
   const [currentTrack, setCurrentTrack] = useState({ title: '', artist: '' });
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [audioSrc, setAudioSrc] = useState('/demo-track.mp3');
+  const [dragX, setDragX] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const audioRef = useRef(null);
   const progressRef = useRef(null);
+
+  // Определяем, является ли устройство мобильным
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Библиотека треков - добавьте свои треки здесь
   const playlist = [
@@ -242,7 +254,10 @@ const MediaPlayer = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-1/2 -translate-y-1/2 w-80 h-96 bg-primary/90 backdrop-blur-md border border-white/10 rounded-r-2xl shadow-2xl z-50"
+              className="fixed left-0 w-80 h-96 bg-primary/90 backdrop-blur-md border border-white/10 rounded-r-2xl shadow-2xl z-50"
+              style={{
+                bottom: 'calc(var(--bottom-bar-height, 0px) + 0px)'
+              }}
             >
               <div className="flex flex-col h-full p-6">
                 {/* Заголовок */}
@@ -365,22 +380,42 @@ const MediaPlayer = () => {
       </AnimatePresence>
 
       {/* Кнопка для открытия плеера */}
-      <motion.button
-        initial={{ x: 0 }}
-        animate={{ x: isOpen ? 0 : 0 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-accent hover:bg-accent/80 rounded-r-full flex items-center justify-center text-white shadow-lg z-40 transition-colors"
-        title={isOpen ? 'Закрыть плеер' : 'Открыть плеер'}
-      >
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          {isOpen ? '‹' : '›'}
-        </motion.div>
-      </motion.button>
+        <motion.button
+            drag={isMobile ? "x" : false}
+            dragConstraints={{ left: 0, right: 24 }}
+            dragElastic={0}
+            dragMomentum={false}
+            dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+            onDrag={(e, info) => {
+                // Только на мобильных устройствах
+                if (isMobile) {
+                // Если вытянули больше чем на 20px - открываем плеер сразу во время перетаскивания
+                if (info.offset.x > 20) {
+                    setIsOpen(true);
+                }
+                }
+            }}
+            onDragEnd={(e, info) => {
+                // Возвращаем кнопку обратно
+                setDragX(0);
+            }}
+            animate={{ x: isOpen ? 0 : dragX }}
+            initial={{ x: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            whileHover={{ scale: 1.05, x: 0 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsOpen(!isOpen)}
+            className="fixed -left-6 md:hover:left-0 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-accent hover:bg-accent/80 rounded-r-full flex items-center justify-center text-white shadow-lg z-40 md:transition-all md:duration-300 touch-none"
+            title={isOpen ? 'Закрыть плеер' : (isPlaying ? 'Плеер (воспроизводится)' : 'Открыть плеер')}
+            >
+            <div className="ml-2 md:ml-0">
+                {isPlaying ? (
+                <HiPause className="w-5 h-5 md:w-7 md:h-7" />
+                ) : (
+                <HiPlay className="w-5 h-5 md:w-7 md:h-7" />
+                )}
+            </div>
+        </motion.button>
     </>
   );
 };

@@ -52,7 +52,9 @@ const Nav = () => {
     const updateHeight = () => {
       const height = barRef.current?.getBoundingClientRect?.().height || 0;
       if (typeof window !== "undefined" && document?.documentElement?.style) {
-        document.documentElement.style.setProperty("--bottom-bar-height", `${height}px`);
+        // Устанавливаем высоту только на мобильных (< 1200px), на десктопе 0
+        const isMobile = window.innerWidth < 1200;
+        document.documentElement.style.setProperty("--bottom-bar-height", isMobile ? `${height}px` : '0px');
       }
     };
     updateHeight();

@@ -55,7 +55,7 @@ const Contact = () => {
             className="flex-1 flex flex-col gap-6 w-full mx-auto"
             onSubmit={handleSubmit}
             autoComplete="off"
-            autoCapitalize="off"
+            autoCapitalize="none"
             // EmailJS: поля name/email/subject/message должны совпадать с шаблоном
           >
             {/* input group */}
