@@ -16,19 +16,22 @@ function MyApp({ Component, pageProps }) {
   const AppLayout = wantsScrollable ? ScrollableLayout : Layout;
 
   return (
-    <AppLayout>
-      <Head>
-        <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
-      </Head>
-      <AnimatePresence mode="wait">
-        <motion.div key={router.route} className="h-full">
-          <Transition />
-          <Component {...pageProps} />
-        </motion.div>
-      </AnimatePresence>
-      {/* Глобальный медиа-плеер */}
+    <>
+      {/* Глобальный медиа-плеер - вынесен вне AppLayout, чтобы не пересоздавался при смене лейаута */}
       <MediaPlayer />
-    </AppLayout>
+
+      <AppLayout>
+        <Head>
+          <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
+        </Head>
+        <AnimatePresence mode="wait">
+          <motion.div key={router.route} className="h-full">
+            <Transition />
+            <Component {...pageProps} />
+          </motion.div>
+        </AnimatePresence>
+      </AppLayout>
+    </>
   );
 }
 
