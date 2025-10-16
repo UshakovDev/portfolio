@@ -15,41 +15,37 @@ const inter = Inter({
 
 const ScrollableLayout = ({ children }) => {
   useEffect(() => {
-    document.body.classList.add('scrollable');
+    // Сохраняем исходные классы body и аккуратно добавляем scrollable
+    const original = document.body.className;
+    if (!document.body.classList.contains('scrollable')) {
+      document.body.classList.add('scrollable');
+    }
     return () => {
-      document.body.classList.remove('scrollable');
+      // Восстанавливаем исходные классы при размонтировании лейаута
+      document.body.className = original;
     };
   }, []);
 
   return (
-    <main
-      className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
-    >
-      {/* metadata */}
-      <Head>
-        <title>Ushakov | Portfolio</title>
-        <meta
-          name="description"
-          content="Дмитрий Ушаков - веб-разработчик с опытом работы с Bitrix, React, Python, PHP. Специализируюсь на создании решений, которые работают."
-        />
-        <meta
-          name="keywords"
-          content="веб-разработчик, bitrix, react, python, php, mysql, postgresql, docker, nginx, fullstack, портфолио, разработка сайтов"
-        />
-        <meta name="author" content="Дмитрий Ушаков" />
-        <meta name="theme-color" content="#f13024" />
-        <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
-      </Head>
-
+    <>
+      {/* Вынесенные фиксированные элементы вне прокручиваемого контейнера */}
       <TopLeftImg />
       <Nav />
-      <Header sticky />
 
-      {/* main content */}
-      {children}
-      {/* dynamic spacer equal to bottom nav height on mobile */}
-      <div aria-hidden className="xl:hidden" style={{ height: "var(--bottom-bar-height, 112px)" }} />
-    </main>
+      <main
+        className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
+        style={{ contain: 'layout style', isolation: 'isolate' }}
+      >
+        {/* metadata — оставляем управление в _app.jsx */}
+
+        <Header sticky />
+
+        {/* main content */}
+        {children}
+        {/* dynamic spacer equal to bottom nav height on mobile */}
+        <div aria-hidden className="xl:hidden" style={{ height: "var(--bottom-bar-height, 112px)" }} />
+      </main>
+    </>
   );
 };
 
