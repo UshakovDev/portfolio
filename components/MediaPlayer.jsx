@@ -217,6 +217,9 @@ const MediaPlayer = () => {
 
   const audioRef = useRef(null);
   const progressRef = useRef(null);
+  const buttonRef = useRef(null);
+  const ringOuterRef = useRef(null);
+  const ringInnerRef = useRef(null);
 
   // Определяем, является ли устройство мобильным
   useEffect(() => {
@@ -379,6 +382,56 @@ const MediaPlayer = () => {
       };
     }
   }, [isPlaying, audioSrc]);
+
+  // Неоновые кольца вокруг кнопки (реагируют на бас только во время воспроизведения)
+  useEffect(() => {
+    const btnEl = buttonRef.current;
+    const outer = ringOuterRef.current;
+    const inner = ringInnerRef.current;
+    if (!btnEl || !outer || !inner) return;
+
+    let raf;
+    const analyser = typeof window !== 'undefined' ? window.__GLOBAL_ANALYSER : null;
+    const data = analyser ? new Uint8Array(analyser.frequencyBinCount) : null;
+
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+
+      let intensity = 0;
+      if (analyser && data && isPlaying) {
+        analyser.getByteFrequencyData(data);
+        const n = Math.max(1, Math.floor(data.length * 0.18));
+        let sum = 0;
+        for (let i = 0; i < n; i++) sum += data[i];
+        intensity = Math.min(1, (sum / n) / 255);
+      }
+
+      if (!isPlaying || !analyser) {
+        outer.style.opacity = '0';
+        inner.style.opacity = '0';
+        return;
+      }
+
+      const outerScale = 1 + intensity * 0.8;
+      const innerScale = 1 + intensity * 0.5;
+
+      outer.style.transform = `scale(${outerScale})`;
+      inner.style.transform = `scale(${innerScale})`;
+
+      outer.style.opacity = String(0.18 + intensity * 0.55);
+      inner.style.opacity = String(0.12 + intensity * 0.45);
+    };
+
+    // Сбросим возможное предыдущее свечение
+    btnEl.style.boxShadow = '';
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      outer.style.opacity = '0';
+      inner.style.opacity = '0';
+    };
+  }, [isPlaying]);
 
   const togglePlayPause = () => {
     const audio = audioRef.current;
@@ -578,7 +631,9 @@ const MediaPlayer = () => {
       </AnimatePresence>
 
       {/* Кнопка для открытия плеера */}
+      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40">
         <motion.button
+            ref={buttonRef}
             drag={isMobile ? "x" : false}
             dragConstraints={{ left: 0, right: 24 }}
             dragElastic={0}
@@ -603,9 +658,56 @@ const MediaPlayer = () => {
             whileHover={{ scale: 1.05, x: 0 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="fixed -left-6 md:hover:left-0 top-1/2 -translate-y-1/2 w-12 h-12 md:w-16 md:h-16 bg-accent hover:bg-accent/80 rounded-r-full flex items-center justify-center text-white shadow-lg z-40 md:transition-all md:duration-300 touch-none"
+            className="relative -left-6 md:hover:left-0 w-12 h-12 md:w-16 md:h-16 bg-accent hover:bg-accent/80 rounded-r-full flex items-center justify-center text-white shadow-lg md:transition-all md:duration-300 touch-none overflow-visible"
             title={isOpen ? 'Закрыть плеер' : (isPlaying ? 'Плеер (воспроизводится)' : 'Открыть плеер')}
             >
+            {/* Неоновые кольца (визуальный слой) - реагируют на бас музыки */}
+            <div className="absolute inset-0 -m-4 pointer-events-none" aria-hidden>
+                {/* 
+                  ВНЕШНЕЕ КОЛЬЦО
+                  Настройки:
+                  - border: '3px solid rgba(R, G, B, A)' - толщина и цвет
+                    * 3px - толщина обводки (можно: 1px-10px)
+                    * R, G, B - цвет (0-255 для каждого канала)
+                    * A - прозрачность (0.0-1.0)
+                  - filter: 'blur(2px)' - размытие для эффекта свечения (0px-10px)
+                  - -m-4 в родителе - отступ кольца от кнопки (можно менять на -m-2, -m-6 и т.д.)
+                */}
+                <span
+                    ref={ringOuterRef}
+                    className="absolute inset-0 rounded-r-full opacity-0 transition-[opacity] duration-150 will-change-transform"
+                    style={{ 
+                        transform: 'scale(1)',
+                        border: '3px solid rgba(244, 4, 224, 0.5)',
+                        filter: 'blur(2px)'
+                    }}
+                />
+                {/* 
+                  ВНУТРЕННЕЕ КОЛЬЦО
+                  Настройки:
+                  - border: '2px solid rgba(R, G, B, A)' - толщина и цвет
+                    * 2px - тоньше внешнего (рекомендуется 1px-3px)
+                    * rgba(...) - цвет, обычно похож на внешнее, но может отличаться
+                  - filter: 'blur(6px)' - больше размытие для мягкого свечения (2px-12px)
+                  
+                  Примеры цветов (rgba):
+                  - Красный:     rgba(241, 48, 36, 0.8)
+                  - Синий:       rgba(59, 130, 246, 0.8)
+                  - Зелёный:     rgba(34, 197, 94, 0.8)
+                  - Фиолетовый:  rgba(147, 51, 234, 0.8)
+                  - Голубой:     rgba(14, 165, 233, 0.8)
+                  - Белый:       rgba(255, 255, 255, 0.7)
+                */}
+                <span
+                    ref={ringInnerRef}
+                    className="absolute inset-0 rounded-r-full opacity-0 transition-[opacity] duration-150 will-change-transform"
+                    style={{ 
+                        transform: 'scale(1)',
+                        border: '2px solid rgba(208, 0, 255, 0.56)',
+                        filter: 'blur(6px)'
+                    }}
+                />
+            </div>
             <div className="ml-2 md:ml-0">
                 {isPlaying ? (
                 <HiPause className="w-5 h-5 md:w-7 md:h-7" />
@@ -614,6 +716,7 @@ const MediaPlayer = () => {
                 )}
             </div>
         </motion.button>
+      </div>
     </>
   );
 };
