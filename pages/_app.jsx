@@ -5,6 +5,7 @@ import Head from "next/head";
 import Layout from "../components/Layout";
 import ScrollableLayout from "../components/ScrollableLayout";
 import Transition from "../components/Transition";
+import MediaPlayer from "../components/MediaPlayer";
 
 import "../styles/globals.css";
 
@@ -25,6 +26,8 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
+      {/* Глобальный медиа-плеер */}
+      <MediaPlayer />
     </AppLayout>
   );
 }
