@@ -239,25 +239,35 @@ const MediaPlayer = () => {
       artist: 'Портфолио'
     },
     {
-      src: '/background-music.mp3',
-      title: 'Фоновая музыка',
+      src: '/track1.mp3',
+      title: 'Тtrack1',
       artist: 'Портфолио'
     },
-    // {
-    //   src: '/track1.mp3',
-    //   title: 'Трек 1',
-    //   artist: 'Исполнитель'
-    // },
-    // {
-    //   src: '/ambient-chill.mp3',
-    //   title: 'Ambient Chill',
-    //   artist: 'Relax Music'
-    // },
-    // {
-    //   src: '/upbeat-pop.mp3',
-    //   title: 'Upbeat Pop',
-    //   artist: 'Modern Beats'
-    // }
+    {
+      src: '/track2.mp3',
+      title: 'Тtrack2',
+      artist: 'Портфолио'
+    },
+    {
+      src: '/track3.mp3',
+      title: 'Тtrack3',
+      artist: 'Портфолио'
+    },
+    {
+      src: '/track4.mp3',
+      title: 'Тtrack4',
+      artist: 'Портфолио'
+    },
+    {
+      src: '/track5.mp3',
+      title: 'Тtrack5',
+      artist: 'Портфолио'
+    },
+    {
+      src: '/track6.mp3',
+      title: 'Тtrack6',
+      artist: 'Портфолио'
+    },
   ];
 
   // Функция для получения информации о текущем треке
