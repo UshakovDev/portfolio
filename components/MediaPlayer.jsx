@@ -232,39 +232,42 @@ const MediaPlayer = () => {
   }, []);
 
   // Библиотека треков - добавьте свои треки здесь
+  // Префикс для GitHub Pages / статического экспорта
+  const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const withBase = (p) => `${BASE_PATH}${p}`;
   const playlist = [
     {
-      src: '/demo-track.mp3',
+      src: withBase('/demo-track.mp3'),
       title: 'Демонстрационный трек',
       artist: 'Портфолио'
     },
     {
-      src: '/track1.mp3',
+      src: withBase('/track1.mp3'),
       title: 'Тtrack1',
       artist: 'Портфолио'
     },
     {
-      src: '/track2.mp3',
+      src: withBase('/track2.mp3'),
       title: 'Тtrack2',
       artist: 'Портфолио'
     },
     {
-      src: '/track3.mp3',
+      src: withBase('/track3.mp3'),
       title: 'Тtrack3',
       artist: 'Портфолио'
     },
     {
-      src: '/track4.mp3',
+      src: withBase('/track4.mp3'),
       title: 'Тtrack4',
       artist: 'Портфолио'
     },
     {
-      src: '/track5.mp3',
+      src: withBase('/track5.mp3'),
       title: 'Тtrack5',
       artist: 'Портфолио'
     },
     {
-      src: '/track6.mp3',
+      src: withBase('/track6.mp3'),
       title: 'Тtrack6',
       artist: 'Портфолио'
     },
