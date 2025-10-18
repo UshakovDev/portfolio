@@ -78,7 +78,7 @@
 }
 
 /* iOS Safari blend/compositing nudge */
-/* @supports (-webkit-touch-callout: none) {
+@supports (-webkit-touch-callout: none) {
   @keyframes ios-blend-nudge { to { opacity: 0.999; } }
   .ios-blend-fix { animation: ios-blend-nudge 2s infinite alternate; }
-} */
+}
