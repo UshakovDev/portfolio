@@ -12,6 +12,7 @@ function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
+    const isIOS = typeof navigator !== 'undefined' && /iP(hone|ad|od)|iOS|iPad|iPhone/.test(navigator.userAgent);
     const audioEl = audioRef?.current;
     if (!audioEl) return;
 
@@ -38,7 +39,7 @@ function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
           // В некоторых браузерах повторное создание вызовет ошибку
         }
       }
-      // Всегда обеспечиваем маршрут звука к выходу независимо от наличия визуализации
+      // Подключаем источник к destination на не‑iOS (на iOS визуализация отключена выше)
       if (audioEl._mediaNode && !audioEl._connectedToDestination) {
         try {
           audioEl._mediaNode.connect(audioCtx.destination);
@@ -77,7 +78,10 @@ function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
         try {
           if (!analyserRef.current._connectedToSilent && silentGainRef.current) {
             analyserRef.current.connect(silentGainRef.current);
-            silentGainRef.current.connect(audioCtx.destination);
+            // На iOS не подключаем тихий канал к destination, чтобы избежать глюков
+            if (!isIOS) {
+              silentGainRef.current.connect(audioCtx.destination);
+            }
             analyserRef.current._connectedToSilent = true;
           }
         } catch (_) {}
@@ -102,6 +106,29 @@ function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
       } else {
         audioEl.addEventListener('play', resumeOnPlay, { once: true });
       }
+
+      // iOS: безопасный lifecycle для анализа — отцепляем/цепляем тихий канал и приостанавливаем контекст
+      const onVisibilityChange = () => {
+        if (!isIOS) return;
+        if (document.visibilityState === 'hidden') {
+          try { audioCtx.suspend().catch(() => {}); } catch (_) {}
+        } else {
+          try { audioCtx.resume().catch(() => {}); } catch (_) {}
+        }
+      };
+      const onPause = () => {
+        if (!isIOS) return;
+        try { audioCtx.suspend().catch(() => {}); } catch (_) {}
+      };
+      const onPlay = () => {
+        if (!isIOS) return;
+        try { audioCtx.resume().catch(() => {}); } catch (_) {}
+      };
+      if (typeof document !== 'undefined') {
+        document.addEventListener('visibilitychange', onVisibilityChange);
+      }
+      audioEl.addEventListener('pause', onPause);
+      audioEl.addEventListener('play', onPlay);
 
       const canvas = canvasRef.current;
       const wrapper = wrapperRef.current;
@@ -179,6 +206,13 @@ function AudioEqualizer({ audioRef, height = 96, bars = 24, gap = 2 }) {
         cancelAnimationFrame(rafRef.current);
         window.removeEventListener('resize', onWindowResize);
         try { ro && ro.disconnect(); } catch (_) {}
+        try {
+          if (typeof document !== 'undefined') {
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+          }
+          audioEl.removeEventListener('pause', onPause);
+          audioEl.removeEventListener('play', onPlay);
+        } catch (_) {}
         // Не отключаем аудио-граф, чтобы не ломать цепочку между открытиями
       };
 
@@ -358,15 +392,9 @@ const MediaPlayer = () => {
         setIsLoading(false);
       };
 
-      audio.addEventListener('timeupdate', updateProgress);
-      audio.addEventListener('loadedmetadata', updateDuration);
-      audio.addEventListener('canplay', handleCanPlay);
-      audio.addEventListener('loadeddata', handleCanPlay);
-      audio.addEventListener('loadstart', handleLoadStart);
-      audio.addEventListener('error', handleError);
-      audio.addEventListener('play', () => setIsPlaying(true));
-      audio.addEventListener('pause', () => setIsPlaying(false));
-      audio.addEventListener('ended', () => {
+      const handlePlay = () => setIsPlaying(true);
+      const handlePause = () => setIsPlaying(false);
+      const handleEnded = () => {
         // Автоматически переключаем на следующий трек когда текущий закончился
         if (playlist.length > 1) {
           setTimeout(() => {
@@ -375,7 +403,17 @@ const MediaPlayer = () => {
         } else {
           setIsPlaying(false);
         }
-      });
+      };
+
+      audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('loadedmetadata', updateDuration);
+      audio.addEventListener('canplay', handleCanPlay);
+      audio.addEventListener('loadeddata', handleCanPlay);
+      audio.addEventListener('loadstart', handleLoadStart);
+      audio.addEventListener('error', handleError);
+      audio.addEventListener('play', handlePlay);
+      audio.addEventListener('pause', handlePause);
+      audio.addEventListener('ended', handleEnded);
 
       // Также попробуем получить длительность сразу после установки src
       if (audio.readyState >= 1) {
@@ -389,12 +427,12 @@ const MediaPlayer = () => {
         audio.removeEventListener('loadeddata', handleCanPlay);
         audio.removeEventListener('loadstart', handleLoadStart);
         audio.removeEventListener('error', handleError);
-        audio.removeEventListener('play', () => setIsPlaying(true));
-        audio.removeEventListener('pause', () => setIsPlaying(false));
-        audio.removeEventListener('ended', () => setIsPlaying(false));
+        audio.removeEventListener('play', handlePlay);
+        audio.removeEventListener('pause', handlePause);
+        audio.removeEventListener('ended', handleEnded);
       };
     }
-  }, [isPlaying, audioSrc]);
+  }, [audioSrc]);
 
   // Неоновые кольца вокруг кнопки (реагируют на бас только во время воспроизведения)
   useEffect(() => {
@@ -454,7 +492,6 @@ const MediaPlayer = () => {
       } else {
         audio.play();
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -498,7 +535,7 @@ const MediaPlayer = () => {
   return (
     <>
       {/* Аудио элемент (скрытый) */}
-      <audio ref={audioRef} src={audioSrc} preload="metadata" controls={false} />
+      <audio ref={audioRef} src={audioSrc} preload="metadata" controls={false} playsInline />
 
       {/* Выдвижная панель медиа-плеера */}
       <AnimatePresence>
