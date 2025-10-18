@@ -1,10 +1,12 @@
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Header from "./Header";
 import Nav from "./Nav";
 import TopLeftImg from "./TopLeftImg";
+import Circles from "./Circles";
 
 // setup font
 const inter = Inter({
@@ -14,6 +16,7 @@ const inter = Inter({
 });
 
 const ScrollableLayout = ({ children }) => {
+  const router = useRouter();
   useEffect(() => {
     // Сохраняем исходные классы body и аккуратно добавляем scrollable
     const original = document.body.className;
@@ -30,11 +33,12 @@ const ScrollableLayout = ({ children }) => {
     <>
       {/* Вынесенные фиксированные элементы вне прокручиваемого контейнера */}
       <TopLeftImg />
+      {router.pathname.startsWith('/about') ? <Circles /> : null}
       <Nav />
 
       <main
         className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
-        style={{ contain: 'layout style', isolation: 'isolate' }}
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* metadata — оставляем управление в _app.jsx */}
 
