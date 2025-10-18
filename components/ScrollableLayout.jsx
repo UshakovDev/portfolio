@@ -34,7 +34,7 @@ const ScrollableLayout = ({ children }) => {
 
       <main
         className={`h-screen overflow-y-auto overflow-x-hidden bg-site text-white bg-cover bg-no-repeat ${inter.variable} font-inter relative`}
-        style={{ contain: 'layout style', isolation: 'isolate' }}
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* metadata — оставляем управление в _app.jsx */}
 
