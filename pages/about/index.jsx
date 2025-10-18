@@ -27,7 +27,7 @@ import {
 } from "react-icons/si";
 
 // import Avatar from "../../components/Avatar";
-import Circles from "../../components/Circles";
+// Circles рендерится из ScrollableLayout (фикс iOS blend)
 import { fadeIn } from "../../variants";
 import BitrixIcon from "../../components/BitrixIcon";
 
@@ -157,7 +157,6 @@ const About = () => {
 
   return (
     <div className="h-full bg-primary/30 py-32 text-center xl:text-left">
-      <Circles />
 
       {/* avatar img */}
       {/* <motion.div
