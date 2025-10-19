@@ -691,7 +691,7 @@ const MediaPlayer = () => {
                     className="absolute inset-0 rounded-r-full opacity-0 transition-[opacity] duration-150 will-change-transform"
                     style={{ 
                         transform: 'scale(1)',
-                        border: '3px solid rgba(244, 4, 224, 0.5)',
+                        border: '10px solid rgba(99, 2, 235, 0.53)',
                         filter: 'blur(2px)'
                     }}
                 />
@@ -716,7 +716,7 @@ const MediaPlayer = () => {
                     className="absolute inset-0 rounded-r-full opacity-0 transition-[opacity] duration-150 will-change-transform"
                     style={{ 
                         transform: 'scale(1)',
-                        border: '2px solid rgba(208, 0, 255, 0.56)',
+                        border: '15px solid rgba(80, 44, 240, 0.62)',
                         filter: 'blur(6px)'
                     }}
                 />

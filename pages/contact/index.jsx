@@ -41,7 +41,7 @@ const Contact = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h2 text-center mb-12"
+            className="h2 text-center mb-4 md:mb-12"
           >
             Обратная <span className="text-accent">связь.</span>
           </motion.h2>
@@ -52,7 +52,7 @@ const Contact = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="flex-1 flex flex-col gap-6 w-full mx-auto"
+            className="flex-1 flex flex-col gap-4 md:gap-6 w-full mx-auto"
             onSubmit={handleSubmit}
             autoComplete="off"
             autoCapitalize="none"
@@ -131,3 +131,4 @@ const Contact = () => {
 };
 
 export default Contact;
+Contact.useScrollableLayout = true;
