@@ -211,7 +211,9 @@ const MediaPlayer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentTrack, setCurrentTrack] = useState({ title: '', artist: '' });
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [audioSrc, setAudioSrc] = useState('/demo-track.mp3');
+  // Учитываем базовый путь сразу при инициализации, чтобы избежать первого 404
+  const BASE_PATH_ENV = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const [audioSrc, setAudioSrc] = useState(`${BASE_PATH_ENV}/demo-track.mp3`);
   const [dragX, setDragX] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
