@@ -107,7 +107,6 @@ Useful resources and dependencies that are used in Modern Portfolio.
 
 ### Production Dependencies
 
-- [@next/font](https://www.npmjs.com/package/@next/font): ^13.4.4
 - [framer-motion](https://www.npmjs.com/package/framer-motion): ^10.12.16
 - [next](https://www.npmjs.com/package/next): 13.4.3
 - [react](https://www.npmjs.com/package/react): 18.2.0
