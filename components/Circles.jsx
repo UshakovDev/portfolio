@@ -9,8 +9,9 @@ const Circles = () => {
   return (
     <div className={`w-[200px] xl:w-[300px] ${posClass} -right-16 -bottom-2 mix-blend-color-dodge animate-pulse duration-75 z-10 translate-z-0 will-change-transform pointer-events-none select-none ios-blend-fix`}>
       <Image
-        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/circles.png`}
-        alt="circles"
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/circles.webp`}
+        alt=""
+        aria-hidden
         width={260}
         height={200}
         className="w-full h-full"

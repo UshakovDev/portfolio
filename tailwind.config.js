@@ -30,7 +30,7 @@ module.exports = {
         accent: "#F13024",
       },
       backgroundImage: {
-        explosion: `url("${base}/bg-explosion.png")`,
+        explosion: `url("${base}/bg-explosion.webp")`,
         circles: `url("${base}/bg-circles.png")`,
         circleStar: `url("${base}/circle-star.svg")`,
         site: `url("${base}/site-bg.svg")`,

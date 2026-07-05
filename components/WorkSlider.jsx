@@ -14,25 +14,25 @@ const workSlides = {
       images: [
         {
           title: "ushakov.cookie",
-          path: "/ushakov.cookie.png",
+          path: "/ushakov.cookie.webp",
           link: "https://github.com/UshakovDev/ushakov.cookie",
           description: "Личный проект",
         },
         {
           title: "ushakov.telegram",
-          path: "/ushakov.telegram.png",
+          path: "/ushakov.telegram.webp",
           link: "https://github.com/UshakovDev/ushakov.telegram",
           description: "Личный проект",
         },
         {
           title: "Anonymous-Telegram-chatbot",
-          path: "/Anonymous-Telegram-chatbot.png",
+          path: "/Anonymous-Telegram-chatbot.webp",
           link: "https://github.com/UshakovDev/Anonymous-Telegram-chatbot",
           description: "Личный проект",
         },
         {
           title: "youtube-proxy",
-          path: "/youtube-proxy.png",
+          path: "/youtube-proxy.webp",
           link: "https://github.com/UshakovDev/youtube-proxy",
           description: "Личный проект",
         },
@@ -42,25 +42,25 @@ const workSlides = {
       images: [
         {
           title: "arsenal-rent.ru",
-          path: "/arsenal-rent.ru.png",
+          path: "/arsenal-rent.ru.webp",
           link: "https://arsenal-rent.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "asyastroy.ru",
-          path: "/asyastroy.ru.png",
+          path: "/asyastroy.ru.webp",
           link: "https://asyastroy.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "faw28.ru",
-          path: "/faw28.ru.png",
+          path: "/faw28.ru.webp",
           link: "https://faw28.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "snab28.ru",
-          path: "/snab28.ru.png",
+          path: "/snab28.ru.webp",
           link: "https://snab28.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
@@ -70,25 +70,25 @@ const workSlides = {
       images: [
         {
           title: "xn--28-jlcdu4bn.xn--p1ai",
-          path: "/xn--28-jlcdu4bn.xn--p1ai.png",
+          path: "/xn--28-jlcdu4bn.xn--p1ai.webp",
           link: "https://xn--28-jlcdu4bn.xn--p1ai",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "endoscopia28.ru",
-          path: "/endoscopia28.ru.png",
+          path: "/endoscopia28.ru.webp",
           link: "https://endoscopia28.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "tvoyaapteka.ru",
-          path: "/tvoyaapteka.ru.png",
+          path: "/tvoyaapteka.ru.webp",
           link: "https://www.tvoyaapteka.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "mmill.ru",
-          path: "/mmill.ru.png",
+          path: "/mmill.ru.webp",
           link: "https://mmill.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
@@ -98,25 +98,25 @@ const workSlides = {
       images: [
         {
           title: "shtormauto.ru",
-          path: "/shtormauto.ru.png",
+          path: "/shtormauto.ru.webp",
           link: "https://shtormauto.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "domobuvi.shop",
-          path: "/domobuvi.shop.png",
+          path: "/domobuvi.shop.webp",
           link: "https://domobuvi.shop",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "berloga28.ru",
-          path: "/berloga28.ru.png",
+          path: "/berloga28.ru.webp",
           link: "https://berloga28.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
         {
           title: "realvita.ru",
-          path: "/realvita.ru.png",
+          path: "/realvita.ru.webp",
           link: "https://realvita.ru",
           description: "Коммерческий проект (работал в команде SP-ArtGroup)",
         },
