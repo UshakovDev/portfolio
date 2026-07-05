@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Head from "next/head";
 
 import Bulb from "../../components/Bulb";
 import Circles from "../../components/Circles";
@@ -7,6 +8,11 @@ import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
+    <>
+    <Head>
+      <title>Проекты | Дмитрий Ушаков</title>
+      <meta name="description" content="Портфолио проектов Дмитрия Ушакова: личные и коммерческие сайты, боты и сервисы на Bitrix, React, Python." />
+    </Head>
     <div className="h-full bg-primary/30 py-36 flex items-center">
       <Circles />
       <div className="container mx-auto">
@@ -48,6 +54,7 @@ const Work = () => {
       </div>
       <Bulb />
     </div>
+    </>
   );
 };
 

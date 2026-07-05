@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Head from "next/head";
 import { useState } from "react";
 import CountUp from "react-countup";
 import {
@@ -26,7 +27,6 @@ import {
   SiGunicorn,
 } from "react-icons/si";
 
-// import Avatar from "../../components/Avatar";
 // Circles рендерится из ScrollableLayout (фикс iOS blend)
 import { fadeIn } from "../../variants";
 import BitrixIcon from "../../components/BitrixIcon";
@@ -162,6 +162,11 @@ const About = () => {
   const [index, setIndex] = useState(0);
 
   return (
+    <>
+    <Head>
+      <title>Обо мне | Дмитрий Ушаков</title>
+      <meta name="description" content="Дмитрий Ушаков — веб-разработчик. Навыки, опыт работы, достижения и сертификаты: Bitrix, React, Python, PHP, Docker." />
+    </Head>
     <div className="h-full bg-primary/30 py-32 text-center xl:text-left">
 
       {/* avatar img */}
@@ -368,6 +373,7 @@ const About = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 
