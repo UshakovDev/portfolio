@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Head from "next/head";
 import { BsArrowRight } from "react-icons/bs";
 
 import { fadeIn } from "../../variants";
@@ -11,6 +12,12 @@ const Contact = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Honeypot: скрытое поле должно оставаться пустым; заполнено — это бот
+    if (event.target.company && event.target.company.value) {
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -31,6 +38,11 @@ const Contact = () => {
   };
 
   return (
+    <>
+    <Head>
+      <title>Контакты | Дмитрий Ушаков</title>
+      <meta name="description" content="Свяжитесь с Дмитрием Ушаковым — веб-разработчиком. Форма обратной связи для обсуждения проектов и сотрудничества." />
+    </Head>
     <div className="h-full bg-primary/30 overflow-y-auto pb-[30px] md:pb-0">
       <div className="container mx-auto py-20 xl:py-24 text-center xl:text-left flex items-center justify-center h-full mt-0 pt-24 xl:pt-32">
         {/* text & form */}
@@ -58,6 +70,16 @@ const Contact = () => {
             autoCapitalize="none"
             // EmailJS: поля name/email/subject/message должны совпадать с шаблоном
           >
+            {/* honeypot (скрыто от людей, ловушка для ботов) */}
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden
+            />
+
             {/* input group */}
             <div className="flex gap-x-6 w-full">
               <input
@@ -127,6 +149,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
