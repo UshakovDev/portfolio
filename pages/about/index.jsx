@@ -101,7 +101,7 @@ export const aboutData = [
     info: [
       {
         title: "Web-разработчик - СП-ГРУП",
-        stage: "2024 - 2025",
+        stage: "2024 - 2026",
       },
       {
         title: "Full Stack разработчик - самообучение",
@@ -112,6 +112,12 @@ export const aboutData = [
   {
     title: "сертификаты",
     info: [
+      {
+        icon: BitrixIcon,
+        title: "Основные инструменты кастомизации",
+        stage: "2026",
+        url: "https://drive.google.com/file/d/18DT9yJWhuFDfTnZxd5PtywzkSxhCnXaF/view?usp=sharing",
+      },
       {
         icon: BitrixIcon,
         title: "Разработчик - Bitrix Framework",
@@ -204,7 +210,7 @@ const About = () => {
               {/* experience */}
               <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={2} duration={10} />
+                  <CountUp start={0} end={3} duration={10} />
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Года <br /> опыта.
@@ -214,7 +220,7 @@ const About = () => {
               {/* clients */}
               <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={20} duration={10} />
+                  <CountUp start={0} end={23} duration={10} />
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Участий в проектах.
@@ -224,7 +230,7 @@ const About = () => {
               {/* projects */}
               <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={250} duration={10} />
+                  <CountUp start={0} end={320} duration={10} />
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Выполненных задач.
