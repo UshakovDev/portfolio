@@ -1,61 +1,64 @@
 import { motion } from "framer-motion";
-import Head from "next/head";
 
 import Bulb from "../../components/Bulb";
 import Circles from "../../components/Circles";
-import WorkSlider from "../../components/WorkSlider";
+import ProjectGallery from "../../components/ProjectGallery";
+import Seo from "../../components/Seo";
 import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
     <>
-    <Head>
-      <title>Проекты | Дмитрий Ушаков</title>
-      <meta name="description" content="Портфолио проектов Дмитрия Ушакова: личные и коммерческие сайты, боты и сервисы на Bitrix, React, Python." />
-    </Head>
-    <div className="h-full bg-primary/30 py-36 flex items-center">
-      <Circles />
-      <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row gap-x-8">
-          {/* text */}
-          <div className="text-center flex xl:w-[30vw] flex-col lg:text-left mb-4 xl:mb-0">
-            <motion.h2
-              variants={fadeIn("up", 0.2)}
-              initial="hidden"
-              animate="show"
-              exit="hidden"
-              className="h2 xl:mt-12"
-            >
-              Проекты и участие<span className="text-accent"></span>
-            </motion.h2>
-            <motion.p
-              variants={fadeIn("up", 0.4)}
-              initial="hidden"
-              animate="show"
-              exit="hidden"
-              className="mb-4 max-w-[400px] mx-auto lg:mx-0"
-            >
-              В этом разделе вы увидите как мои личные проекты, 
-              так и коммерческие проекты, над которыми я работал в составе команд.
-            </motion.p>
-          </div>
+      <Seo
+        title="Проекты и кейсы | Дмитрий Ушаков"
+        description="Собственные разработки, самостоятельные заказы и проекты, выполненные Дмитрием Ушаковым в составе команды."
+        path="/work/"
+      />
 
-          {/* slider */}
-          <motion.div
-            variants={fadeIn("down", 0.6)}
+      <div className="relative min-h-full overflow-hidden bg-primary/30 pb-16 pt-40 md:pb-24 md:pt-44">
+        <Circles />
+
+        <div className="container relative z-10 mx-auto">
+          <motion.header
+            variants={fadeIn("up", 0.2)}
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="w-full xl:max-w-[65%]"
+            className="mb-10 max-w-3xl"
           >
-            <WorkSlider />
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+              Опыт и результаты
+            </p>
+            <h1 id="projects-heading" className="h2">
+              Проекты и участие
+            </h1>
+            <p className="max-w-2xl text-base text-white/70 md:text-lg">
+              Здесь отдельно показаны собственные разработки, прямые клиентские задачи и
+              проекты, над которыми я работал вместе с командой.
+            </p>
+          </motion.header>
+
+          <div className="mb-8 rounded-2xl border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100 md:p-5">
+            Демонстрационные кейсы и карточки с пометкой «Черновик описания» содержат
+            временный текст. Перед публикацией он будет заменён подтверждёнными данными.
+          </div>
+
+          <motion.div
+            variants={fadeIn("up", 0.35)}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+          >
+            <ProjectGallery />
           </motion.div>
         </div>
+
+        <Bulb />
       </div>
-      <Bulb />
-    </div>
     </>
   );
 };
+
+Work.useScrollableLayout = true;
 
 export default Work;

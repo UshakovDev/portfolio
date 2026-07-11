@@ -2,11 +2,18 @@ import { motion } from "framer-motion";
 
 import ParticlesContainer from "../components/ParticlesContainer";
 import ProjectsBtn from "../components/ProjectsBtn";
+import Seo from "../components/Seo";
 
 import { fadeIn } from "../variants";
 
 const Home = () => {
   return (
+    <>
+    <Seo
+      title="Дмитрий Ушаков | Веб-разработчик"
+      description="Разработка, доработка и интеграция веб-проектов: 1С-Битрикс, React, Python, PHP и внешние сервисы."
+      path="/"
+    />
     <div className="bg-primary/60 h-full">
       {/* text */}
       <div className="w-full h-full bg-gradient-to-r from-primary/10 via-black/30 to-black/10">
@@ -76,6 +83,7 @@ const Home = () => {
         </motion.div> */}
       </div>
     </div>
+    </>
   );
 };
 
