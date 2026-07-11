@@ -6,15 +6,14 @@ import Layout from "../components/Layout";
 import ScrollableLayout from "../components/ScrollableLayout";
 import Transition from "../components/Transition";
 import MediaPlayer from "../components/MediaPlayer";
+import Seo, {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SITE_DESCRIPTION,
+  DEFAULT_SITE_TITLE,
+  SITE_URL,
+} from "../components/Seo";
 
 import "../styles/globals.css";
-
-// Абсолютный адрес продакшн-сайта (для Open Graph / canonical / JSON-LD)
-const SITE_URL = "https://ushakovdev.github.io/portfolio";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
-const SITE_TITLE = "Дмитрий Ушаков | Веб-разработчик";
-const SITE_DESCRIPTION =
-  "Дмитрий Ушаков — веб-разработчик с опытом работы с Bitrix, React, Python, PHP. Создаю решения, которые работают.";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -22,7 +21,7 @@ const personJsonLd = {
   name: "Дмитрий Ушаков",
   jobTitle: "Веб-разработчик",
   url: SITE_URL,
-  image: OG_IMAGE,
+  image: DEFAULT_OG_IMAGE,
   sameAs: [
     "https://github.com/UshakovDev",
     "https://t.me/user_four",
@@ -36,6 +35,7 @@ function MyApp({ Component, pageProps }) {
   const isAbout = router.pathname.startsWith("/about");
   const wantsScrollable = isAbout || Component.useScrollableLayout === true;
   const AppLayout = wantsScrollable ? ScrollableLayout : Layout;
+  const pageKey = (router.asPath || router.route).split(/[?#]/)[0];
 
   return (
     <MotionConfig reducedMotion="user">
@@ -43,26 +43,18 @@ function MyApp({ Component, pageProps }) {
       <MediaPlayer />
 
       <AppLayout>
+        <Seo
+          title={DEFAULT_SITE_TITLE}
+          description={DEFAULT_SITE_DESCRIPTION}
+          path={pageKey}
+        />
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
           <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
-
-          {/* Open Graph (дефолты; страницы переопределяют title/description) */}
-          <meta property="og:type" content="website" />
-          <meta property="og:site_name" content="Дмитрий Ушаков — Портфолио" />
-          <meta property="og:title" content={SITE_TITLE} />
-          <meta property="og:description" content={SITE_DESCRIPTION} />
-          <meta property="og:url" content={SITE_URL} />
-          <meta property="og:image" content={OG_IMAGE} />
-          <meta property="og:locale" content="ru_RU" />
-
-          {/* Twitter Card */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={SITE_TITLE} />
-          <meta name="twitter:description" content={SITE_DESCRIPTION} />
-          <meta name="twitter:image" content={OG_IMAGE} />
-
-          <link rel="canonical" href={`${SITE_URL}/`} />
+          <meta name="author" content="Дмитрий Ушаков" />
+          <meta name="theme-color" content="#f13024" />
+          <meta key="og-site-name" property="og:site_name" content="Дмитрий Ушаков — Портфолио" />
+          <meta key="og-locale" property="og:locale" content="ru_RU" />
 
           {/* Структурированные данные */}
           <script
@@ -71,7 +63,7 @@ function MyApp({ Component, pageProps }) {
           />
         </Head>
         <AnimatePresence mode="wait">
-          <motion.div key={router.route} className="h-full">
+          <motion.div key={pageKey} className="h-full">
             <Transition />
             <Component {...pageProps} />
           </motion.div>

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import Head from "next/head";
 import { useState } from "react";
 import CountUp from "react-countup";
 import {
@@ -30,6 +29,7 @@ import {
 // Circles рендерится из ScrollableLayout (фикс iOS blend)
 import { fadeIn } from "../../variants";
 import BitrixIcon from "../../components/BitrixIcon";
+import Seo from "../../components/Seo";
 
  
 
@@ -163,10 +163,11 @@ const About = () => {
 
   return (
     <>
-    <Head>
-      <title>Обо мне | Дмитрий Ушаков</title>
-      <meta name="description" content="Дмитрий Ушаков — веб-разработчик. Навыки, опыт работы, достижения и сертификаты: Bitrix, React, Python, PHP, Docker." />
-    </Head>
+    <Seo
+      title="Обо мне | Дмитрий Ушаков"
+      description="Навыки, опыт работы, достижения и сертификаты Дмитрия Ушакова: Bitrix, React, Python, PHP и Docker."
+      path="/about/"
+    />
     <div className="h-full bg-primary/30 py-32 text-center xl:text-left">
 
       {/* avatar img */}

@@ -1,8 +1,15 @@
 import { motion } from "framer-motion";
 import { fadeIn } from "../../variants";
+import Seo from "../../components/Seo";
 
 const Privacy = () => {
   return (
+    <>
+    <Seo
+      title="Политика конфиденциальности | Дмитрий Ушаков"
+      description="Порядок обработки персональных данных посетителей сайта-портфолио Дмитрия Ушакова."
+      path="/privacy/"
+    />
     <div className="bg-primary/30 py-32">
         <div className="container mx-auto">
           <motion.div
@@ -108,6 +115,7 @@ const Privacy = () => {
         </motion.div>
         </div>
       </div>
+    </>
   );
 };
 
