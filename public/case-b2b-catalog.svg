@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720" role="img" aria-label="Схема доработок B2B-каталога">
+  <defs>
+    <radialGradient id="glow" cx="72%" cy="18%" r="78%">
+      <stop offset="0%" stop-color="#2a2140"/>
+      <stop offset="55%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#131424"/>
+    </radialGradient>
+    <linearGradient id="accentBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F13024"/>
+      <stop offset="100%" stop-color="#F13024" stop-opacity="0.35"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#F13024"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#glow)"/>
+
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+    <text x="84" y="106" fill="#ffffff" fill-opacity="0.92" font-size="42" font-weight="700">B2B-каталог</text>
+    <text x="84" y="146" fill="#ffffff" fill-opacity="0.5" font-size="21">доработка каталога, регистрации и выгрузки товаров</text>
+
+    <!-- источник данных -->
+    <g>
+      <rect x="84" y="266" width="228" height="170" rx="18" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.12"/>
+      <text x="108" y="304" fill="#ffffff" fill-opacity="0.6" font-size="17">Данные о товарах</text>
+      <rect x="108" y="326" width="180" height="12" rx="6" fill="#ffffff" fill-opacity="0.16"/>
+      <rect x="108" y="352" width="146" height="12" rx="6" fill="#ffffff" fill-opacity="0.16"/>
+      <rect x="108" y="378" width="168" height="12" rx="6" fill="#ffffff" fill-opacity="0.16"/>
+      <rect x="108" y="404" width="122" height="12" rx="6" fill="#ffffff" fill-opacity="0.16"/>
+    </g>
+
+    <!-- поток выгрузки -->
+    <line x1="330" y1="351" x2="424" y2="351" stroke="#F13024" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow)"/>
+    <text x="332" y="332" fill="#F13024" fill-opacity="0.9" font-size="16" font-weight="600">выгрузка</text>
+
+    <!-- каталог на сайте -->
+    <g>
+      <rect x="452" y="196" width="744" height="410" rx="24" fill="#ffffff" fill-opacity="0.045" stroke="#ffffff" stroke-opacity="0.12"/>
+
+      <!-- баннер -->
+      <rect x="484" y="228" width="680" height="72" rx="14" fill="url(#accentBar)"/>
+      <text x="508" y="272" fill="#ffffff" fill-opacity="0.95" font-size="19" font-weight="600">баннер</text>
+
+      <!-- популярные товары -->
+      <text x="484" y="342" fill="#ffffff" fill-opacity="0.6" font-size="17">Популярные товары</text>
+      <g fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.1">
+        <rect x="484" y="360" width="158" height="126" rx="14"/>
+        <rect x="658" y="360" width="158" height="126" rx="14"/>
+        <rect x="832" y="360" width="158" height="126" rx="14"/>
+        <rect x="1006" y="360" width="158" height="126" rx="14"/>
+      </g>
+      <g fill="#ffffff" fill-opacity="0.18">
+        <rect x="504" y="452" width="118" height="10" rx="5"/>
+        <rect x="678" y="452" width="118" height="10" rx="5"/>
+        <rect x="852" y="452" width="118" height="10" rx="5"/>
+        <rect x="1026" y="452" width="118" height="10" rx="5"/>
+      </g>
+      <g fill="#F13024" fill-opacity="0.75">
+        <circle cx="620" cy="382" r="7"/>
+        <circle cx="794" cy="382" r="7"/>
+        <circle cx="968" cy="382" r="7"/>
+        <circle cx="1142" cy="382" r="7"/>
+      </g>
+
+      <!-- регистрация -->
+      <rect x="484" y="510" width="330" height="64" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.12"/>
+      <circle cx="518" cy="542" r="13" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
+      <circle cx="518" cy="537" r="4.5" fill="#ffffff" fill-opacity="0.35"/>
+      <path d="M510.5 550a8.5 8.5 0 0 1 15 0" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
+      <text x="546" y="549" fill="#ffffff" fill-opacity="0.6" font-size="17">Регистрация</text>
+
+      <rect x="834" y="510" width="330" height="64" rx="14" fill="#F13024" fill-opacity="0.12" stroke="#F13024" stroke-opacity="0.35"/>
+      <text x="864" y="549" fill="#F13024" font-size="17" font-weight="600">1С-Битрикс</text>
+    </g>
+  </g>
+</svg>

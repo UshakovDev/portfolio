@@ -33,7 +33,9 @@ test.describe("SEO and static export", () => {
     });
   }
 
-  test("placeholder case pages are generated but protected from indexing", async ({ page }) => {
+  test("case pages are generated with indexing that matches publication state", async ({
+    page,
+  }) => {
     const { getCaseProjects } = await import("../data/projects.mjs");
 
     for (const project of getCaseProjects()) {
@@ -41,10 +43,13 @@ test.describe("SEO and static export", () => {
       const response = await page.goto(route);
       expect(response?.status()).toBe(200);
       await expect(page.getByRole("heading", { name: project.title })).toBeVisible();
-      await expect(page.locator('head meta[name="robots"]')).toHaveAttribute(
-        "content",
-        "noindex,follow"
-      );
+
+      const robots = page.locator('head meta[name="robots"]');
+      if (project.published && !project.isPlaceholder) {
+        await expect(robots).toHaveCount(0);
+      } else {
+        await expect(robots).toHaveAttribute("content", "noindex,follow");
+      }
       await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute(
         "href",
         `${SITE_URL}/work/${project.caseSlug}/`
@@ -70,7 +75,8 @@ test.describe("SEO and static export", () => {
     expect(sitemap).toContain(`${SITE_URL}/services/`);
     expect(sitemap).toContain(`${SITE_URL}/work/`);
     expect(sitemap).not.toContain("/testimonials/");
-    expect(sitemap).not.toContain("bitrix-store-example");
+    expect(sitemap).not.toContain("telegram-leads-example");
+    expect(sitemap).not.toContain("catalog-automation-example");
 
     const robotsResponse = await request.get(`${BASE_PATH}/robots.txt`);
     expect(robotsResponse.status()).toBe(200);

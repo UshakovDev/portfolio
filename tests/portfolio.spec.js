@@ -74,7 +74,18 @@ test.describe("portfolio development functionality", () => {
     await expect(card.getByText("Результат", { exact: true })).toBeVisible();
     await expect(card.getByLabel("Технологии проекта")).toBeVisible();
     await expect(card.getByRole("link", { name: "Подробнее" })).toBeVisible();
-    await expect(card.getByText("Демонстрационные данные")).toBeVisible();
+  });
+
+  test("placeholder cards stay marked as demonstration data", async ({ page }) => {
+    const { projects } = await import("../data/projects.mjs");
+    const placeholders = projects.filter(
+      (project) => project.category === "direct" && project.isPlaceholder
+    );
+
+    await page.goto(`${BASE_PATH}/work/#direct`);
+    await expect(
+      page.locator("#project-grid article", { hasText: "Демонстрационные данные" })
+    ).toHaveCount(placeholders.length);
   });
 
   for (const width of [320, 375, 390]) {
