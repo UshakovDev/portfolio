@@ -4,7 +4,7 @@ export const SITE_URL = "https://ushakovdev.github.io/portfolio";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const DEFAULT_SITE_TITLE = "Дмитрий Ушаков | Веб-разработчик";
 export const DEFAULT_SITE_DESCRIPTION =
-  "Дмитрий Ушаков — веб-разработчик с опытом работы с Bitrix, React, Python и PHP. Создаю решения, которые работают.";
+  "Дмитрий Ушаков - веб-разработчик с опытом работы с Bitrix, React, Python и PHP. Создаю решения, которые работают.";
 
 export function getCanonicalUrl(path = "/") {
   const pathname = String(path || "/").split(/[?#]/)[0];
