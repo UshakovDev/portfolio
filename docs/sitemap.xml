@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ushakovdev.github.io/portfolio/services/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://ushakovdev.github.io/portfolio/work/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -24,5 +29,20 @@
     <loc>https://ushakovdev.github.io/portfolio/privacy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://ushakovdev.github.io/portfolio/work/b2b-catalog/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ushakovdev.github.io/portfolio/work/platform-migration/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ushakovdev.github.io/portfolio/work/backup-database/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
