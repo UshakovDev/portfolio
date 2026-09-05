@@ -38,11 +38,6 @@ const Work = () => {
             </p>
           </motion.header>
 
-          <div className="mb-8 rounded-2xl border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100 md:p-5">
-            Демонстрационные кейсы и карточки с пометкой «Черновик описания» содержат
-            временный текст. Перед публикацией он будет заменён подтверждёнными данными.
-          </div>
-
           <motion.div
             variants={fadeIn("up", 0.35)}
             initial="hidden"

@@ -102,19 +102,14 @@ const CasePage = ({ project }) => {
               </div>
             </section>
 
-            <section className="rounded-2xl border border-white/10 bg-white/[0.05] p-6 md:col-span-2">
-              <h2 className="mb-3 text-2xl font-semibold">Отзыв клиента</h2>
-              {project.case.testimonial ? (
+            {project.case.testimonial ? (
+              <section className="rounded-2xl border border-white/10 bg-white/[0.05] p-6 md:col-span-2">
+                <h2 className="mb-3 text-2xl font-semibold">Отзыв клиента</h2>
                 <blockquote className="text-lg text-white/75">
                   «{project.case.testimonial}»
                 </blockquote>
-              ) : (
-                <p className="text-white/65">
-                  Отзыв не опубликован. Здесь появится только подтверждённый текст с разрешения
-                  автора.
-                </p>
-              )}
-            </section>
+              </section>
+            ) : null}
           </div>
 
           <section className="mt-12 rounded-3xl border border-accent/30 bg-accent/10 p-7 text-center md:p-10">
