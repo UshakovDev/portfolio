@@ -48,7 +48,7 @@ const CasePage = ({ project }) => {
               </span>
               {project.isPlaceholder ? (
                 <span className="rounded-full bg-amber-400/15 px-3 py-1 text-sm font-medium text-amber-200">
-                  Тестовые данные — заменить перед публикацией
+                  Тестовые данные - заменить перед публикацией
                 </span>
               ) : null}
             </div>
@@ -122,7 +122,7 @@ const CasePage = ({ project }) => {
               Нужно обсудить похожую задачу?
             </h2>
             <p className="mb-6 text-white/70">
-              Опишите исходную ситуацию и желаемый результат — я уточню детали и предложу
+              Опишите исходную ситуацию и желаемый результат - я уточню детали и предложу
               следующий шаг.
             </p>
             <Link

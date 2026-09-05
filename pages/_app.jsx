@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }) {
           <link rel="icon" href={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/favicon.ico`} />
           <meta name="author" content="Дмитрий Ушаков" />
           <meta name="theme-color" content="#f13024" />
-          <meta key="og-site-name" property="og:site_name" content="Дмитрий Ушаков — Портфолио" />
+          <meta key="og-site-name" property="og:site_name" content="Дмитрий Ушаков - Портфолио" />
           <meta key="og-locale" property="og:locale" content="ru_RU" />
 
           {/* Структурированные данные */}
