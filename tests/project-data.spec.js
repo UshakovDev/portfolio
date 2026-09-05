@@ -55,20 +55,37 @@ test.describe("project data", () => {
     for (const project of projects.filter((item) => item.category === "direct")) {
       expect(project.caseSlug).toMatch(/^[a-z0-9-]+$/);
       expect(project.case).toBeTruthy();
-      expect(project.isPlaceholder).toBe(true);
-      expect(project.published).toBe(false);
+      expect(project.case.challenges.length).toBeGreaterThan(0);
+
+      // Демонстрационный кейс никогда не должен оказаться опубликованным,
+      // а опубликованный - помеченным как демонстрационный.
+      if (project.isPlaceholder) {
+        expect(project.published).toBe(false);
+      } else {
+        expect(project.contentStatus).toBe("verified");
+      }
     }
   });
 
   test("publishes only approved non-placeholder cases in sitemap", async () => {
-    const { getPublishedCaseProjects } = await import("../data/projects.mjs");
+    const { getCaseProjects, getPublishedCaseProjects } = await import("../data/projects.mjs");
     const { buildSitemap } = await import("../scripts/generate-sitemap.mjs");
-
-    expect(getPublishedCaseProjects()).toEqual([]);
 
     const xml = buildSitemap();
     expect(xml).toContain("/services/");
     expect(xml).not.toContain("/testimonials/");
-    expect(xml).not.toContain("bitrix-store-example");
+
+    const published = getPublishedCaseProjects();
+    expect(published.length).toBeGreaterThan(0);
+
+    for (const project of published) {
+      expect(project.isPlaceholder).toBe(false);
+      expect(project.published).toBe(true);
+      expect(xml).toContain(`/work/${project.caseSlug}/`);
+    }
+
+    for (const project of getCaseProjects().filter((item) => item.isPlaceholder)) {
+      expect(xml).not.toContain(project.caseSlug);
+    }
   });
 });
